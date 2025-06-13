@@ -23,9 +23,9 @@ cd "$PROJECT_ROOT"
 
 # Define base directories
 RAW_BASE="02-raw/platforms"
-PROCESSED_BASE="03-Processed"
+PROCESSED_BASE="03-processed"
 CLOUD_BASE="02-raw/cloud"
-PRODUCTS_BASE="04-Products"
+PRODUCTS_BASE="04-products"
 
 # Read archive path from config.json
 ARCHIVE_PATH=$(jq -r '.archive_path' config.json)
@@ -50,9 +50,9 @@ if ! command -v jq &> /dev/null; then
 fi
 
 # Check if the basic archive structure exists
-if [[ ! -d "$ARCHIVE_PATH/01-catalog" || ! -d "$ARCHIVE_PATH/02-raw" || ! -d "$ARCHIVE_PATH/03-Processed" || ! -d "$ARCHIVE_PATH/04-Products" ]]; then
+if [[ ! -d "$ARCHIVE_PATH/01-catalog" || ! -d "$ARCHIVE_PATH/02-raw" || ! -d "$ARCHIVE_PATH/03-processed" || ! -d "$ARCHIVE_PATH/04-products" ]]; then
   echo "Creating basic archive structure in $ARCHIVE_PATH ..."
-  mkdir -p "$ARCHIVE_PATH/01-catalog" "$ARCHIVE_PATH/02-raw" "$ARCHIVE_PATH/03-Processed" "$ARCHIVE_PATH/04-Products" || { echo "Error: Failed to create basic archive structure."; exit 1; }
+  mkdir -p "$ARCHIVE_PATH/01-catalog" "$ARCHIVE_PATH/02-raw" "$ARCHIVE_PATH/03-processed" "$ARCHIVE_PATH/04-products" || { echo "Error: Failed to create basic archive structure."; exit 1; }
 else
   echo "Basic archive structure already exists in $ARCHIVE_PATH."
   # Verify that the structure matches the template
