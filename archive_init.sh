@@ -23,8 +23,9 @@ cd "$PROJECT_ROOT"
 
 # Define base directories
 RAW_BASE="02-raw/platforms"
-PROCESSED_BASE="03-Processed/platforms"
+PROCESSED_BASE="03-Processed"
 CLOUD_BASE="02-raw/cloud"
+PRODUCTS_BASE="04-Products"
 
 # Read archive path from config.json
 ARCHIVE_PATH=$(jq -r '.archive_path' config.json)
@@ -84,13 +85,20 @@ for PLATFORM in $PLATFORMS; do
 done
 
 echo "$ARCHIVE_PATH/$PROCESSED_BASE"
-for PLATFORM in $PLATFORMS; do
-  echo "  └── $PLATFORM"
+PROCESSED_FOLDERS=$(jq -r '.processed.folders[]' config.json)
+for FOLDER in $PROCESSED_FOLDERS; do
+  echo "  └── $FOLDER"
 done
 
 echo "$ARCHIVE_PATH/$CLOUD_BASE"
 CLOUD_FOLDERS=$(jq -r '.cloud.folders[]' config.json)
 for FOLDER in $CLOUD_FOLDERS; do
+  echo "  └── $FOLDER"
+done
+
+echo "$ARCHIVE_PATH/$PRODUCTS_BASE"
+PRODUCTS_FOLDERS=$(jq -r '.products.folders[]' config.json)
+for FOLDER in $PRODUCTS_FOLDERS; do
   echo "  └── $FOLDER"
 done
 
@@ -102,7 +110,7 @@ if [[ "$CONFIRM" != "y" ]]; then
 fi
 
 # Create base directories if they don't exist
-mkdir -p "$ARCHIVE_PATH/$RAW_BASE" "$ARCHIVE_PATH/$PROCESSED_BASE" "$ARCHIVE_PATH/$CLOUD_BASE" || { echo "Error: Failed to create base directories."; exit 1; }
+mkdir -p "$ARCHIVE_PATH/$RAW_BASE" "$ARCHIVE_PATH/$PROCESSED_BASE" "$ARCHIVE_PATH/$CLOUD_BASE" "$ARCHIVE_PATH/$PRODUCTS_BASE" || { echo "Error: Failed to create base directories."; exit 1; }
 
 # Create directory structure
 for PLATFORM in $PLATFORMS; do
@@ -112,13 +120,21 @@ for PLATFORM in $PLATFORMS; do
     META_DIR="$ARCHIVE_PATH/$RAW_BASE/$PLATFORM/metadata/$SENSOR"
     mkdir -p "$DATA_DIR" "$META_DIR" || { echo "Error: Failed to create directories for $PLATFORM/$SENSOR."; exit 1; }
   done
-  PROC_DIR="$ARCHIVE_PATH/$PROCESSED_BASE/$PLATFORM"
-  mkdir -p "$PROC_DIR" || { echo "Error: Failed to create processed directory for $PLATFORM."; exit 1; }
+done
+
+for FOLDER in $PROCESSED_FOLDERS; do
+  PROC_DIR="$ARCHIVE_PATH/$PROCESSED_BASE/$FOLDER"
+  mkdir -p "$PROC_DIR" || { echo "Error: Failed to create processed directory for $FOLDER."; exit 1; }
 done
 
 for FOLDER in $CLOUD_FOLDERS; do
   CLOUD_DIR="$ARCHIVE_PATH/$CLOUD_BASE/$FOLDER"
   mkdir -p "$CLOUD_DIR" || { echo "Error: Failed to create cloud directory for $FOLDER."; exit 1; }
+done
+
+for FOLDER in $PRODUCTS_FOLDERS; do
+  PRODUCT_DIR="$ARCHIVE_PATH/$PRODUCTS_BASE/$FOLDER"
+  mkdir -p "$PRODUCT_DIR" || { echo "Error: Failed to create products directory for $FOLDER."; exit 1; }
 done
 
 echo "Archive initialisation complete." 

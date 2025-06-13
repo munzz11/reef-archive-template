@@ -13,5 +13,11 @@
   },
   "cloud": {
     "folders": ["data", "metadata"]
+  },
+  "processed": {
+    "folders": ["gsf", "pointclouds"]
+  },
+  "products": {
+    "folders": ["bags", "bs_mosaics", "geotiffs"]
   }
 } 

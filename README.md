@@ -5,13 +5,15 @@
 The following is a template of the archive structure used with REEF. The structure is intended to be flexible depending on the platforms, ROCs involved as well as the various paylods each platform may carry. For example, this template outlines an operation with one drix, with the "standard" set of sensors (mbes and ek80), as well as two ROCs. But this can be customized using the archive_init.sh script.
 
 ```
+.
 ├── 01-catalog
 │   ├── data-manifest
 │   └── ops-log
 ├── 02-raw
 │   ├── cloud
-│   │   ├── data
-│   │   └── metadata
+│   │   └── cloud-robobox
+│   │       ├── data
+│   │       └── metadata
 │   └── platforms
 │       ├── drix-08
 │       │   ├── data
@@ -30,26 +32,26 @@ The following is a template of the archive structure used with REEF. The structu
 │       │       ├── mastervolt
 │       │       ├── mbes
 │       │       └── phins
-│       ├── roc-1
-│       │   ├── data
-│       │   │   └── screenshots
-│       │   └── metadata
-│       │       └── screenshots
-│       └── roc-2-nautilus
-│           ├── data
-│           │   ├── local-robox
-│           │   ├── p11
-│           │   └── screenshots
-│           └── metadata
-│               ├── local-robox
-│               ├── p11
-│               └── screenshots
+│       └── rocs
+│           ├── roc-1
+│           │   ├── data
+│           │   │   └── screenshots
+│           │   └── metadata
+│           └── roc-2-nautilus
+│               ├── data
+│               │   └── screenshots
+│               └── metadata
 ├── 03-Processed
-│   └── platforms
-│       ├── drix-08
-│       ├── roc-1
-│       └── roc-2-nautilus
-└── 04-Products
+│   ├── gsf
+│   └── pointclouds
+├── 04-Products
+│   ├── bags
+│   ├── bs_mosaics
+│   └── geotiffs
+├── archive_clean.sh
+├── archive_init.sh
+├── config.json
+└── README.md
 ```
 
 ## Setup and Usage
