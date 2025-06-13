@@ -1,0 +1,17 @@
+{
+  "archive_path": "/Users/avery/projects/go_test/reef/deployment/reef-archive-template-test/",
+  "platforms": {
+    "drix-08": {
+      "sensors": ["drix", "ctd", "ek80", "gps", "mastervolt", "mbes", "phins"]
+    },
+    "roc-1": {
+      "sensors": ["screenshots"]
+    },
+    "roc-2-nautilus": {
+      "sensors": ["screenshots", "p11", "local-robox"]
+    }
+  },
+  "cloud": {
+    "folders": ["data", "metadata"]
+  }
+} 
